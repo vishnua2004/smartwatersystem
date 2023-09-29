@@ -1,0 +1,28 @@
+import paho.mqtt.client as mqtt
+import time
+
+# Define MQTT parameters
+broker_address = "mqtt.example.com"
+port = 1883
+topic = "water_sensor_data"
+
+# Initialize MQTT client
+client = mqtt.Client()
+client.connect(broker_address, port)
+
+while True:
+    # Read data from sensors (replace with your sensor code)
+    water_level = read_water_level_sensor()
+    water_quality = read_water_quality_sensor()
+
+    # Create a JSON payload
+    payload = {
+        "water_level": water_level,
+        "water_quality": water_quality
+    }
+
+    # Publish data to the MQTT topic
+    client.publish(topic, json.dumps(payload))
+
+    # Wait for a specific interval before taking the next reading
+    time.sleep(60)  # Adjust as needed
